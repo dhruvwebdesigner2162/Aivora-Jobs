@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Career Blog — Aivora Jobs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="CSS/all.min.css">
+<link rel="stylesheet" href="CSS/bootstrap.min.css">
+<link rel="icon" href="Images/Light Logo.png">
+<style>
+  :root{
+    --sky-deep:#0B63C5;
+    --sky-mid:#2E86E8;
+    --sky-light:#EAF3FF;
+    --sky-pale:#F5F9FF;
+    --red:#D62839;
+    --red-deep:#A81E2B;
+    --ink:#0B1B33;
+    --slate:#5B6B82;
+    --paper:#FBFCFE;
+    --line:#DCE6F5;
+    --radius:14px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Inter',sans-serif;
+    background:var(--paper);
+    color:var(--ink);
+    overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,.display{font-family:'Space Grotesk',sans-serif;}
+  .mono{font-family:'IBM Plex Mono',monospace;letter-spacing:0.02em;}
+  a{text-decoration:none;color:inherit;}
+  ul{list-style:none;}
+  img{max-width:100%;display:block;}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 32px;}
+  section{position:relative;}
+
+  /* ---------- Reveal on scroll ---------- */
+  .reveal{opacity:0;transform:translateY(28px);transition:opacity .8s ease,transform .8s ease;}
+  .reveal.in{opacity:1;transform:translateY(0);}
+  .reveal-stagger > *{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease;}
+  .reveal-stagger.in > *{opacity:1;transform:translateY(0);}
+  .reveal-stagger.in > *:nth-child(1){transition-delay:.05s;}
+  .reveal-stagger.in > *:nth-child(2){transition-delay:.12s;}
+  .reveal-stagger.in > *:nth-child(3){transition-delay:.19s;}
+  .reveal-stagger.in > *:nth-child(4){transition-delay:.26s;}
+  .reveal-stagger.in > *:nth-child(5){transition-delay:.33s;}
+  .reveal-stagger.in > *:nth-child(6){transition-delay:.40s;}
+
+  /* ---------- Header ---------- */
+  header{
+    position:fixed;top:0;left:0;right:0;z-index:100;
+    background:rgba(251,252,254,0.82);
+    backdrop-filter:blur(14px);
+    border-bottom:1px solid transparent;
+    transition:border-color .3s ease, box-shadow .3s ease, padding .3s ease;
+    padding:22px 0;
+  }
+  header.scrolled{
+    border-bottom-color:var(--line);
+    box-shadow:0 8px 24px -18px rgba(11,27,51,0.25);
+    padding:14px 0;
+  }
+  .nav-row{display:flex;align-items:center;justify-content:space-between;}
+  .logo{display:flex;align-items:center;gap:9px;font-weight:700;font-size:20px;}
+  .logo-mark{
+    width:30px;height:30px;border-radius:9px;
+    background:linear-gradient(135deg,var(--sky-deep),var(--red));
+    position:relative;flex:none;
+  }
+  .logo-mark::after{
+    content:"";position:absolute;inset:7px;border-radius:5px;background:var(--paper);
+  }
+  nav ul{display:flex;gap:34px;align-items:center;}
+  nav ul li a{font-size:14.5px;font-weight:500;color:var(--slate);transition:color .2s ease;position:relative;}
+  nav ul li a.active{color:var(--sky-deep);}
+  nav ul li a:not(.btn):hover{color:var(--sky-deep);}
+  nav ul li a:not(.btn)::after{
+    content:"";position:absolute;left:0;bottom:-5px;width:0;height:2px;background:var(--red);transition:width .25s ease;
+  }
+  nav ul li a.active::after{width:100%;}
+  nav ul li a:not(.btn):hover::after{width:100%;}
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:11px 22px;border-radius:999px;
+    background:var(--red);color:#fff;font-weight:600;font-size:14.5px;
+    box-shadow:0 10px 24px -10px rgba(214,40,57,0.55);
+    transition:transform .25s ease, box-shadow .25s ease, background .25s ease;
+    border:none;cursor:pointer;
+  }
+  .btn:hover{transform:translateY(-2px);box-shadow:0 16px 30px -10px rgba(214,40,57,0.65);background:var(--red-deep);}
+  .btn-ghost{
+    background:transparent;color:var(--sky-deep);border:1.5px solid var(--sky-deep);
+    box-shadow:none;
+  }
+  .btn-ghost:hover{background:var(--sky-deep);color:#fff;box-shadow:0 10px 24px -12px rgba(11,99,197,0.5);}
+
+  /* ---------- Breadcrumb ---------- */
+  .breadcrumb-strip{
+    padding:150px 0 26px;
+    background:radial-gradient(900px 420px at 82% -10%, var(--sky-light), transparent 60%);
+  }
+  .crumbs{display:flex;align-items:center;gap:8px;font-size:13.5px;color:var(--slate);font-family:'IBM Plex Mono',monospace;}
+  .crumbs a{color:var(--slate);transition:color .2s ease;}
+  .crumbs a:hover{color:var(--sky-deep);}
+  .crumbs .sep{color:#B9C8DE;}
+  .crumbs .current{color:var(--red);}
+
+  /* ---------- Blog hero ---------- */
+  .about-hero{padding:26px 0 60px;text-align:center;}
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:7px 14px;border-radius:999px;background:var(--sky-light);
+    color:var(--sky-deep);font-size:13px;font-weight:600;margin-bottom:22px;
+    border:1px solid #d3e6fb;
+  }
+  .eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--red);animation:pulse-dot 1.8s infinite;}
+  @keyframes pulse-dot{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.4;transform:scale(1.4);}}
+  .about-hero h1{
+    font-size:clamp(34px,4.6vw,52px);line-height:1.1;font-weight:700;letter-spacing:-0.02em;
+    margin:0 auto 18px;max-width:760px;
+  }
+  .about-hero h1 .accent{color:var(--sky-deep);}
+  .about-hero h1 .accent-red{color:var(--red);}
+  .about-hero p.lead{font-size:17.5px;color:var(--slate);max-width:560px;margin:0 auto 0;line-height:1.65;}
+
+  /* ---------- Filter bar ---------- */
+  .filter-section{padding:0 0 70px;}
+  .filter-bar{
+    max-width:900px;margin:0 auto;display:flex;gap:12px;
+    background:#fff;border:1px solid var(--line);border-radius:999px;
+    padding:8px;box-shadow:0 26px 50px -30px rgba(11,27,51,0.28);
+    align-items:center;flex-wrap:wrap;
+  }
+  .filter-bar input[type="text"]{
+    flex:1;min-width:160px;border:none;outline:none;background:transparent;
+    padding:11px 18px;font-size:14.5px;color:var(--ink);font-family:'Inter',sans-serif;
+  }
+  .filter-bar input[type="text"]::placeholder{color:#9AAEC7;}
+  .filter-bar select{
+    border:none;outline:none;background:var(--sky-pale);color:var(--slate);
+    font-size:13.5px;font-weight:500;padding:11px 16px;border-radius:999px;
+    font-family:'Inter',sans-serif;cursor:pointer;flex:none;
+  }
+  .filter-bar .search-btn{
+    flex:none;padding:11px 26px;border-radius:999px;background:var(--red);color:#fff;
+    font-weight:600;font-size:14px;border:none;cursor:pointer;
+    box-shadow:0 10px 24px -10px rgba(214,40,57,0.55);
+    transition:transform .25s ease, box-shadow .25s ease, background .25s ease;
+  }
+  .filter-bar .search-btn:hover{transform:translateY(-2px);background:var(--red-deep);}
+
+  /* ---------- Section headers ---------- */
+  .section-head{max-width:640px;margin-bottom:56px;}
+  .section-head.center{margin-left:auto;margin-right:auto;text-align:center;}
+  .section-head .eyebrow{background:transparent;border-color:var(--sky-light);}
+  .section-head h2{font-size:clamp(28px,3.2vw,40px);font-weight:700;letter-spacing:-0.01em;margin-bottom:14px;}
+  .section-head p{color:var(--slate);font-size:16.5px;line-height:1.6;}
+
+  /* ---------- Blog posts ---------- */
+  .posts{padding:0 0 110px;}
+  .blog-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;}
+  .blog-card{background:#fff;border-radius:var(--radius);border:1px solid var(--line);overflow:hidden;transition:transform .3s ease,box-shadow .3s ease;}
+  .blog-card:hover{transform:translateY(-6px);box-shadow:0 26px 44px -26px rgba(11,27,51,0.25);}
+  .blog-thumb{
+    height:150px;background:linear-gradient(135deg,var(--sky-light),#fff);
+    display:flex;align-items:center;justify-content:center;font-size:34px;
+    border-bottom:1px solid var(--line);
+  }
+  .blog-body{padding:22px 24px 26px;}
+  .blog-tag{font-size:11.5px;color:var(--red);font-weight:600;text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px;display:block;}
+  .blog-body h3{font-size:16.5px;font-weight:600;margin-bottom:10px;line-height:1.4;}
+  .blog-body p{font-size:13.5px;color:var(--slate);line-height:1.55;margin-bottom:14px;}
+  .blog-meta{display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--slate);font-family:'IBM Plex Mono',monospace;}
+  .blog-meta .read-more{color:var(--sky-deep);font-weight:600;}
+
+  /* ---------- Newsletter CTA ---------- */
+  .newsletter-cta{
+    margin:0 auto 110px;max-width:1180px;padding:0 32px;
+  }
+  .newsletter-inner{
+    border-radius:24px;padding:64px 56px;text-align:center;position:relative;overflow:hidden;
+    background:linear-gradient(120deg,var(--sky-deep),#0a4faf 55%,var(--red-deep));
+    color:#fff;
+  }
+  .newsletter-inner::before{
+    content:"";position:absolute;inset:0;
+    background:radial-gradient(600px 300px at 15% 20%, rgba(255,255,255,0.14), transparent 60%);
+  }
+  .newsletter-inner h2{font-size:clamp(26px,3.4vw,38px);margin-bottom:14px;font-weight:700;position:relative;}
+  .newsletter-inner p{opacity:.9;margin-bottom:30px;font-size:16px;position:relative;max-width:520px;margin-left:auto;margin-right:auto;}
+  .newsletter-form{display:flex;gap:0;justify-content:center;position:relative;max-width:440px;margin:0 auto;}
+  .newsletter-form input{
+    flex:1;padding:14px 20px;border-radius:999px 0 0 999px;border:none;font-size:14.5px;outline:none;font-family:'Inter',sans-serif;
+  }
+  .newsletter-form button{
+    padding:14px 26px;border-radius:0 999px 999px 0;background:var(--ink);color:#fff;border:none;font-weight:600;font-size:14.5px;cursor:pointer;transition:background .2s ease;
+  }
+  .newsletter-form button:hover{background:#000;}
+
+  /* ---------- Footer ---------- */
+  footer{background:var(--ink);color:#c9d5e6;padding:70px 0 26px;}
+  .footer-grid{display:grid;grid-template-columns:1.4fr 1fr 1.2fr 1.2fr;gap:44px;margin-bottom:54px;}
+  .footer-logo{display:flex;align-items:center;gap:9px;color:#fff;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:19px;margin-bottom:16px;}
+  .footer-col h4{color:#fff;font-size:14.5px;margin-bottom:18px;font-weight:600;}
+  .footer-col li{margin-bottom:11px;font-size:13.5px;}
+  .footer-col a{color:#9DAEC6;transition:color .2s ease;}
+  .footer-col a:hover{color:var(--red);}
+  .footer p.desc{font-size:13.5px;color:#8FA1BA;line-height:1.7;max-width:280px;margin-bottom:6px;}
+  .footer p.tagline{font-size:13px;color:#7C8FAA;margin-bottom:16px;}
+  .newsletter-row{display:flex;gap:0;margin-top:6px;}
+  .newsletter-row input{
+    flex:1;padding:11px 14px;border-radius:999px 0 0 999px;border:1px solid #24334f;background:#0f2440;color:#fff;font-size:13px;outline:none;
+  }
+  .newsletter-row button{
+    padding:11px 18px;border-radius:0 999px 999px 0;background:var(--red);color:#fff;border:none;font-weight:600;font-size:13px;cursor:pointer;transition:background .2s ease;
+  }
+  .newsletter-row button:hover{background:var(--red-deep);}
+  .social-row{display:flex;gap:10px;margin-top:20px;}
+  .social-row a{
+    width:34px;height:34px;border-radius:50%;border:1px solid #24334f;display:flex;align-items:center;justify-content:center;font-size:13px;transition:background .2s ease, border-color .2s ease;
+  }
+  .social-row a:hover{background:var(--sky-deep);border-color:var(--sky-deep);}
+  .quick-connect{font-size:12px;color:#66799A;margin-top:14px;}
+  .footer-bottom{
+    border-top:1px solid #1a2b47;padding-top:24px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;
+    font-size:12.5px;color:#7C8FAA;
+  }
+  .footer-bottom a{color:#7C8FAA;}
+  .footer-bottom a:hover{color:#fff;}
+  .footer-bottom .legal{display:flex;gap:20px;}
+
+  /* ---------- Responsive ---------- */
+  @media (max-width:920px){
+    nav ul{display:none;}
+    .blog-grid{grid-template-columns:1fr 1fr;}
+    .footer-grid{grid-template-columns:1fr 1fr;}
+    .filter-bar{border-radius:20px;}
+    .filter-bar select{order:3;width:100%;}
+  }
+  @media (max-width:600px){
+    .blog-grid{grid-template-columns:1fr;}
+    .footer-grid{grid-template-columns:1fr;}
+    .newsletter-inner{padding:44px 26px;}
+    .newsletter-form{flex-direction:column;gap:10px;}
+    .newsletter-form input,.newsletter-form button{border-radius:999px;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *{animation-duration:0.001s !important;animation-iteration-count:1 !important;transition-duration:0.001s !important;}
+  }
+
+  .navbar{
+    padding: 0;
+    margin: 0;
+  }
+
+  .navbar-toggler{
+  border:1px solid var(--line);
+  /* padding:6px 10px; */
+  border-radius:8px;
+  background:#fff;
+}
+.navbar-toggler:focus{
+  box-shadow:none;
+}
+.navbar-toggler-icon{
+  width:1.4em;
+  height:1.4em;
+  background-image:url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(11, 27, 51, 0.9)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+</style>
+</head>
+<body>
+
+<header id="siteHeader">
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+      <div class="container">
+        <a class="navbar-brand" href="index.html"><span><img src="Images/Light Logo.png" alt="" style="height: 70px;"></span></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav nav ms-auto mb-2 mb-lg-0">
+            <li class="nav-item me-0">
+              <a href="about.html">About</a>
+            </li>
+            <li class="nav-item me-0">
+              <a href="services.html">Services</a>
+            </li>
+            <li class="nav-item me-0">
+              <a href="blog.html" class="active">Blog</a>
+            </li>
+            <li class="nav-item me-0">
+              <a href="contact.html">Contact</a>
+            </li>
+            <li class="nav-item me-0">
+              <a href="join.html" class="btn">Join Our Network</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+<main id="top">
+
+  <!-- BREADCRUMB -->
+  <section class="breadcrumb-strip">
+    <div class="wrap">
+      <div class="crumbs reveal in">
+        <a href="index.html">Home</a><span class="sep">›</span><span class="current">Blog</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- BLOG HERO -->
+  <section class="about-hero">
+    <div class="wrap">
+      <div class="reveal in">
+        <span class="eyebrow"><span class="dot"></span>Career Insights &amp; Tips</span>
+        <h1>Aivora Jobs <span class="accent">Career</span> <span class="accent-red">Blog</span></h1>
+        <p class="lead">Expert advice on job search, interviews, resumes, and career growth.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FILTER BAR -->
+  <section class="filter-section">
+    <div class="wrap">
+      <div class="filter-bar reveal in">
+        <input type="text" placeholder="🔍 Search articles...">
+        <select>
+          <option>All Categories</option>
+          <option>Resume Tips</option>
+          <option>Interview Prep</option>
+          <option>Career Tips</option>
+        </select>
+        <button class="search-btn">Search</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- POSTS -->
+  <section class="posts" id="posts">
+    <div class="wrap">
+      <div class="blog-grid reveal-stagger">
+        <div class="blog-card">
+          <div class="blog-thumb">📝</div>
+          <div class="blog-body">
+            <span class="blog-tag">Resume Tips</span>
+            <h3>Top 10 Resume Tips for IT Professionals in 2025</h3>
+            <p>Learn how to craft an ATS-friendly resume that gets you noticed by top recruiters and hiring managers.</p>
+            <div class="blog-meta"><span>📅 26 Apr 2026</span><span class="read-more">Read More →</span></div>
+          </div>
+        </div>
+        <div class="blog-card">
+          <div class="blog-thumb">💡</div>
+          <div class="blog-body">
+            <span class="blog-tag">Interview Prep</span>
+            <h3>How to Crack Technical Interviews at Top Companies</h3>
+            <p>A comprehensive guide to preparing for and acing technical interviews at product companies and MNCs.</p>
+            <div class="blog-meta"><span>📅 26 Apr 2026</span><span class="read-more">Read More →</span></div>
+          </div>
+        </div>
+        <div class="blog-card">
+          <div class="blog-thumb">🚀</div>
+          <div class="blog-body">
+            <span class="blog-tag">Career Tips</span>
+            <h3>LinkedIn Profile Optimization: Get 5x More Recruiter Calls</h3>
+            <p>Discover how to optimize your LinkedIn profile to attract recruiters and land your next big opportunity.</p>
+            <div class="blog-meta"><span>📅 26 Apr 2026</span><span class="read-more">Read More →</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- NEWSLETTER CTA -->
+  <section class="newsletter-cta">
+    <div class="newsletter-inner reveal">
+      <h2>Get Career Tips in Your Inbox</h2>
+      <p>Subscribe to our newsletter for weekly job market updates and career advice.</p>
+      <div class="newsletter-form">
+        <input type="email" placeholder="Your email address">
+        <a href="join.html"><button>Subscribe</button></a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo"><span><img src="Images/Dark Logo.png" alt="" style="height: 70px;"></span></div>
+        <p class="desc">Aivora Jobs uses AI to smartly connect exceptional talent with innovative companies. Your career growth, our mission.</p>
+        <div class="social-row">
+          <a href="https://www.facebook.com/share/197tzqQ9AG/?mibextid=wwXIfr" target="_blank">f</a><a href="https://www.linkedin.com/company/aivora-jobs/" target="_blank">in</a><a href="https://www.instagram.com/aivorajobs?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="services.html">Our Services</a></li>
+          <li><a href="blog.html">Career Blog</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="join.html">Join Network</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact Info</h4>
+        <ul>
+          <li>📍 8 The Green, Suite B, Dover, Delaware 19901</li>
+          <li>📞 +1 407-703-8458</li>
+          <li>✉️ service@aivorajobs.com</li>
+          <li>⏰ Mon–Fri: 9:00 AM – 7:00 PM</li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Stay Updated</h4>
+        <p style="font-size:13px;color:#8FA1BA;margin-bottom:12px;">Get the latest job alerts and career tips in your inbox.</p>
+        <div class="newsletter-row">
+          <input type="email" placeholder="Your email address">
+          <a href="join.html"><button>Go</button></a>
+        </div>
+        <a href="https://wa.me/917041063111?text=Hello+Aivora+Jobs%21+I+want+to+know+more&utm_source=chatgpt.com"><p style="font-size:12px;color:#66799A;margin-top:14px;">💬 WhatsApp Us</p></a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Aivora Jobs. All rights reserved.</span>
+      <div class="legal">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Header scroll state
+  const header = document.getElementById('siteHeader');
+  window.addEventListener('scroll', () => {
+    header.classList.toggle('scrolled', window.scrollY > 20);
+  });
+
+  // Scroll reveal
+  const revealEls = document.querySelectorAll('.reveal, .reveal-stagger');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if(e.isIntersecting){ e.target.classList.add('in'); }
+    });
+  }, {threshold:0.15});
+  revealEls.forEach(el => io.observe(el));
+</script>
+
+<script>
+  // Nav link click par mobile menu auto-close
+  document.querySelectorAll('#menu .nav-link').forEach(link => {
+    link.addEventListener('click', () => {
+      const menu = document.getElementById('menu');
+      if (menu.classList.contains('show')) {
+        bootstrap.Collapse.getInstance(menu)?.hide();
+      }
+    });
+  });
+</script>
+
+<script src="JS/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
