@@ -510,14 +510,14 @@
 
 <div class="toast" id="toast"><span class="tick">✓</span> <span id="toastMsg">Registered successfully!</span></div>
 
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script> -->
 
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 
 <script>
   // EmailJS initialization with your Public Key
   (function() {
-      emailjs.init("VNrPq9P2ECTh9MDip");
+      emailjs.init("nkqyQ0zpOkfg2hynE");
   })();
 
   // Header scroll state
@@ -536,19 +536,11 @@
   revealEls.forEach(el => io.observe(el));
 
   // File upload UI feedback
-  const resumeInput = document.getElementById('resumeInput');
-  const fileDrop = document.getElementById('fileDrop');
-  const fileText = document.getElementById('fileText');
+  // const resumeInput = document.getElementById('resumeInput');
+  // const fileDrop = document.getElementById('fileDrop');
+  // const fileText = document.getElementById('fileText');
   
-  resumeInput.addEventListener('change', () => {
-    if(resumeInput.files.length){
-      fileDrop.classList.add('has-file');
-      fileText.innerHTML = `<strong>${resumeInput.files[0].name}</strong> selected`;
-    } else {
-      fileDrop.classList.remove('has-file');
-      fileText.innerHTML = '<strong>Click to upload</strong> or drag and drop';
-    }
-  });
+  
 
   // --- Form Submit with EmailJS ---
   const form = document.getElementById('joinForm');
@@ -580,29 +572,29 @@
     submitBtn.disabled = true;
     submitBtn.innerHTML = "⏳ Sending Request...";
 
-    // Convert Resume File to Base64 for attachment
-    let resumeBase64 = null;
-    if (resumeInput.files.length > 0) {
-      const file = resumeInput.files[0];
+    // // Convert Resume File to Base64 for attachment
+    // let resumeBase64 = null;
+    // if (resumeInput.files.length > 0) {
+    //   const file = resumeInput.files[0];
       
-      if (file.size > 5 * 1024 * 1024) {
-        alert('The file size must be less than 5 MB');
-        submitBtn.disabled = false;
-        submitBtn.innerHTML = originalBtnText;
-        return;
-      }
+    //   if (file.size > 5 * 1024 * 1024) {
+    //     alert('The file size must be less than 5 MB');
+    //     submitBtn.disabled = false;
+    //     submitBtn.innerHTML = originalBtnText;
+    //     return;
+    //   }
 
-      try {
-        resumeBase64 = await new Promise((resolve, reject) => {
-          const reader = new FileReader();
-          reader.onload = () => resolve(reader.result);
-          reader.onerror = error => reject(error);
-          reader.readAsDataURL(file);
-        });
-      } catch (err) {
-        console.error("File reading failed", err);
-      }
-    }
+    //   try {
+    //     resumeBase64 = await new Promise((resolve, reject) => {
+    //       const reader = new FileReader();
+    //       reader.onload = () => resolve(reader.result);
+    //       reader.onerror = error => reject(error);
+    //       reader.readAsDataURL(file);
+    //     });
+    //   } catch (err) {
+    //     console.error("File reading failed", err);
+    //   }
+    // }
 
     // EmailJS Parameters
     const templateParams = {
@@ -615,7 +607,7 @@
       skills: skills || 'Not Provided',
       location: location || 'Not Provided',
       linkedin: linkedin || 'Not Provided',
-      resume: resumeBase64
+      //resume: resumeBase64
     };
 
     // Send Email using EmailJS
@@ -627,9 +619,9 @@
          setTimeout(() => toast.classList.remove('show'), 4000);
 
          // Reset Form
-         form.reset();
-         fileDrop.classList.remove('has-file');
-         fileText.innerHTML = '<strong>Click to upload</strong> or drag and drop';
+        //  form.reset();
+        //  fileDrop.classList.remove('has-file');
+        //  fileText.innerHTML = '<strong>Click to upload</strong> or drag and drop';
       }, function(error) {
          // Error Handling
          alert('There was an error sending the email. Please try again');
