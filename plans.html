@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="CSS/all.min.css">
+    <link rel="stylesheet" href="CSS/bootstrap.min.css">
+    <style>
+        :root{
+    --navy-dark:#0B1B34;
+    --navy-semidark:#1E3A5F;
+    --blue-dark:#2563EB;
+    --blue-semidark:#3B82F6;
+    --blue-light:#60A5FA;
+    --red-dark:#E11D2E;
+    --red-light:#FF4757;
+    --slate-dark:#64748B;
+    --slate-light:#E2E8F0;
+    --white:#FFFFFF;
+    --sky-deep:#0B63C5;
+    --sky-mid:#2E86E8;
+    --sky-light:#EAF3FF;
+    --sky-pale:#F5F9FF;
+    --red:#D62839;
+    --red-deep:#A81E2B;
+    --ink:#0B1B33;
+    --slate:#5B6B82;
+    --paper:#FBFCFE;
+    --line:#DCE6F5;
+    --radius:14px;
+    --navy-900:#0B1B34;
+    --navy-700:#1E3A5F;
+    --blue-600:#2563EB;
+    --blue-500:#3B82F6;
+    --blue-400:#60A5FA;
+    --sky-100:#EAF3FF;
+    --sky-50:#F6FAFF;
+    --red-600:#E11D2E;
+    --red-500:#FF4757;
+    --white:#FFFFFF;
+    --slate-500:#64748B;
+    --slate-200:#E2E8F0;
+    --radius-lg:22px;
+    --navy-900:#0B1B34;
+    --navy-700:#1E3A5F;
+    --blue-600:#2563EB;
+    --sky-100:#EAF3FF;
+    --sky-50:#F6FAFF;
+    --red-600:#E11D2E;
+    --white:#FFFFFF;
+    --slate-500:#64748B;
+    --slate-200:#E2E8F0;
+    --sky-deep:#0B63C5;
+  --sky-light:#EAF3FF;
+  --red:#D62839;
+  --red-deep:#A81E2B;
+  --paper:#FBFCFE;
+  --sky-deep:#0B63C5;
+  --red:#D62839;
+  --red-deep:#A81E2B;
+  --ink:#0B1B33;
+  }
+  *{box-sizing:border-box;}
+  body{
+    font-family:'Inter',sans-serif;color:var(--navy-dark);margin:0;
+  }
+  h1{font-family:'Poppins',sans-serif;}
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:.01ms !important;animation-iteration-count:1 !important;}
+  }
+
+  /* ---------- Hero / Banner ---------- */
+  .hero{
+    position:relative;padding:100px 24px 130px;text-align:center;overflow:hidden;isolation:isolate;
+  }
+  .hero::before{
+    content:"";position:absolute;inset:0;z-index:-2;
+    background:radial-gradient(900px 500px at 18% -8%, #DCEBFF 0%, rgba(220,235,255,0) 62%),
+               radial-gradient(700px 420px at 88% 6%, #FFE2E6 0%, rgba(255,226,230,0) 60%),
+               var(--white);
+  }
+
+  /* floating blurred blobs (parallax target) */
+  .blob{position:absolute;border-radius:50%;filter:blur(50px);opacity:.55;z-index:-1;animation:float 9s ease-in-out infinite;will-change:transform;}
+  .blob.b1{width:280px;height:280px;background:var(--blue-light);top:-70px;left:6%;animation-delay:0s;}
+  .blob.b2{width:220px;height:220px;background:var(--red-light);top:120px;right:8%;opacity:.35;animation-delay:2s;}
+  .blob.b3{width:180px;height:180px;background:#8FD3FF;bottom:-40px;left:38%;opacity:.4;animation-delay:4s;}
+  @keyframes float{0%,100%{transform:translateY(0) scale(1);}50%{transform:translateY(-22px) scale(1.06);}}
+
+  .eyebrow-pill{
+    display:inline-flex;align-items:center;gap:8px;background:var(--white);border:1px solid var(--slate-light);
+    color:var(--blue-dark);font-weight:600;font-size:13.5px;padding:9px 18px;border-radius:999px;margin-bottom:26px;
+    box-shadow:0 6px 18px -8px rgba(37,99,235,.35);opacity:0;animation:riseIn .6s .05s ease forwards;
+  }
+  .eyebrow-pill .dot{width:6px;height:6px;border-radius:50%;background:var(--red-dark);}
+
+  .hero h1{font-size:clamp(34px,4.8vw,56px);max-width:820px;margin:0 auto 20px;font-weight:700;opacity:0;animation:riseIn .7s .15s ease forwards;}
+  .hero h1 .accent{color:var(--blue-dark);}
+  .hero p.lead{max-width:600px;margin:0 auto;color:var(--slate-dark);font-size:17.5px;opacity:0;animation:riseIn .7s .28s ease forwards;}
+  @keyframes riseIn{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+
+  .hero-note{margin-top:32px;display:flex;justify-content:center;gap:34px;flex-wrap:wrap;color:var(--navy-semidark);font-size:14.5px;font-weight:500;opacity:0;animation:riseIn .7s .4s ease forwards;}
+  .hero-note div{display:flex;align-items:center;gap:8px;}
+  .dot-check{width:18px;height:18px;border-radius:50%;background:var(--blue-dark);display:inline-flex;align-items:center;justify-content:center;flex:none;}
+  .dot-check svg{width:10px;height:10px;}
+
+  /* floating info cards */
+  .float-card{
+    position:absolute;background:var(--white);border-radius:16px;
+    box-shadow:0 20px 45px -18px rgba(11,27,52,.28);padding:14px 18px;
+    display:flex;align-items:center;gap:10px;font-size:13.5px;font-weight:600;
+    opacity:0;animation:cardIn .7s ease forwards, drift 6s ease-in-out infinite;will-change:transform;
+  }
+  @keyframes cardIn{from{opacity:0;transform:translateY(14px) scale(.94);}to{opacity:1;transform:translateY(0) scale(1);}}
+  @keyframes drift{0%,100%{transform:translateY(0);}50%{transform:translateY(-10px);}}
+  .fc-1{top:58px;left:6%;animation-delay:.55s,1.5s;}
+  .fc-2{top:210px;right:5%;animation-delay:.7s,2.1s;}
+  .fc-3{bottom:18px;left:14%;animation-delay:.85s,2.7s;}
+  @media(max-width:900px){.float-card{display:none;}}
+  .fc-emoji{width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:17px;flex:none;}
+  .fc-1 .fc-emoji{background:#E7F0FF;}
+  .fc-2 .fc-emoji{background:#FFE9EA;}
+  .fc-3 .fc-emoji{background:#E7FBEF;}
+  .fc-sub{display:block;font-weight:400;color:var(--slate-dark);font-size:12px;}
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Inter',sans-serif;
+    background:var(--paper);
+    color:var(--ink);
+    overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{text-decoration:none;color:inherit;}
+  ul{list-style:none;}
+  img{max-width:100%;display:block;}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 32px;}
+
+  /* ---------- Header ---------- */
+  header{
+    position:fixed;top:0;left:0;right:0;z-index:100;
+    background:rgba(251,252,254,0.82);
+    backdrop-filter:blur(14px);
+    border-bottom:1px solid transparent;
+    transition:border-color .3s ease, box-shadow .3s ease, padding .3s ease;
+    padding:22px 0;
+  }
+  header.scrolled{
+    border-bottom-color:var(--line);
+    box-shadow:0 8px 24px -18px rgba(11,27,51,0.25);
+    padding:14px 0;
+  }
+  .nav-row{display:flex;align-items:center;justify-content:space-between;}
+  .logo{display:flex;align-items:center;gap:9px;font-weight:700;font-size:20px;}
+  .logo-mark{
+    width:30px;height:30px;border-radius:9px;
+    background:linear-gradient(135deg,var(--sky-deep),var(--red));
+    position:relative;flex:none;
+  }
+  .logo-mark::after{
+    content:"";position:absolute;inset:7px;border-radius:5px;background:var(--paper);
+  }
+  nav ul{display:flex;gap:34px;align-items:center;}
+  nav ul li a{font-size:14.5px;font-weight:500;color:var(--slate);transition:color .2s ease;position:relative;}
+  nav ul li a:not(.btn):hover{color:var(--sky-deep);}
+  nav ul li a:not(.btn)::after{
+    content:"";position:absolute;left:0;bottom:-5px;width:0;height:2px;background:var(--red);transition:width .25s ease;
+  }
+  nav ul li a:not(.btn):hover::after{width:100%;}
+  .btn{
+    padding:11px 22px;border-radius:999px;
+    background:var(--red);color:#fff;font-weight:600;font-size:14.5px;
+    box-shadow:0 10px 24px -10px rgba(214,40,57,0.55);
+    transition:transform .25s ease, box-shadow .25s ease, background .25s ease;
+    border:none;cursor:pointer;
+  }
+  .btn:hover{transform:translateY(-2px);box-shadow:0 16px 30px -10px rgba(214,40,57,0.65);background:var(--red-deep);}
+  .btn-ghost{
+    background:transparent;color:var(--sky-deep);border:1.5px solid var(--sky-deep);
+    box-shadow:none;
+  }
+  .btn-ghost:hover{background:var(--sky-deep);color:#fff;box-shadow:0 10px 24px -12px rgba(11,99,197,0.5);}
+
+  .navbar{
+    padding:0;
+    margin:0;
+  }
+  .navbar-toggler{
+    border:1px solid var(--line);
+    border-radius:8px;
+    background:#fff;
+  }
+  .navbar-toggler:focus{
+    box-shadow:none;
+  }
+  .navbar-toggler-icon{
+    width:1.4em;
+    height:1.4em;
+    background-image:url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(11, 27, 51, 0.9)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+  }
+
+  /* Just so the fixed header doesn't cover content when this file is previewed alone */
+  .preview-spacer{height:120px;}
+
+  @media (prefers-reduced-motion:reduce){
+    *{animation-duration:0.001s !important;animation-iteration-count:1 !important;transition-duration:0.001s !important;}
+  }
+
+  .score
+  {
+    background-color: #0B1B34;
+  }
+
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Inter',sans-serif;color:var(--navy-900);background:var(--white);
+    line-height:1.6;overflow-x:hidden;
+  }
+  h1,h2,h3,h4{font-family:'Poppins',sans-serif;color:var(--navy-900);line-height:1.25;}
+  a{text-decoration:none;color:inherit;}
+  img{max-width:100%;display:block;}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 24px;}
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important;}
+  }
+
+  @keyframes float{0%,100%{transform:translateY(0) scale(1);}50%{transform:translateY(-22px) scale(1.06);}}
+
+  /* ---------- Pricing Cards ---------- */
+  .plans-section{padding:78px 24px 30px;position:relative;overflow:hidden;isolation:isolate;}
+  .plans-bg-blob{position:absolute;border-radius:50%;filter:blur(60px);z-index:-1;animation:float 10s ease-in-out infinite;}
+  .pbb-1{width:380px;height:380px;background:#A9D2FF;opacity:.4;top:-50px;left:0%;animation-delay:0s;}
+  .pbb-2{width:340px;height:340px;background:#FFC4CA;opacity:.32;top:40px;right:2%;animation-delay:2.5s;}
+  .pbb-3{width:300px;height:300px;background:#8FBBEE;opacity:.3;bottom:-80px;left:40%;animation-delay:4.5s;}
+  .pbb-4{width:220px;height:220px;background:#FFE7A8;opacity:.28;top:220px;left:22%;animation-delay:3.2s;}
+
+  .section-head{max-width:640px;margin:0 auto 46px;text-align:center;position:relative;}
+  .section-head .kicker{color:var(--blue-600);font-weight:600;font-size:13.5px;margin-bottom:10px;display:block;}
+  .section-head h2{font-size:clamp(26px,3.4vw,36px);margin-bottom:12px;font-weight:700;}
+  .section-head p{color:var(--slate-500);font-size:16px;}
+
+  .plans-grid{max-width:1000px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:28px;position:relative;}
+  @media(max-width:760px){.plans-grid{grid-template-columns:1fr;}}
+
+  .plan-card{
+    border-radius:var(--radius-lg);padding:3px;position:relative;
+    background:conic-gradient(from var(--ang,0deg), #BFDBFE, #FCA5B1, #E0F2FE, #93C5FD, #BFDBFE);
+    animation:spin 6s linear infinite;
+    transition:transform .35s cubic-bezier(.2,.8,.2,1);
+  }
+  @property --ang{syntax:'<angle>';inherits:false;initial-value:0deg;}
+  @keyframes spin{to{--ang:360deg;}}
+  .plan-card:hover{transform:translateY(-12px) scale(1.015);}
+  .plan-card-inner{
+    border-radius:calc(var(--radius-lg) - 3px);padding:40px 34px 34px;position:relative;color:var(--white);
+    overflow:hidden;isolation:isolate;height:100%;
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.5);
+    backdrop-filter:blur(26px) saturate(180%);
+    -webkit-backdrop-filter:blur(26px) saturate(180%);
+  }
+  .plan-card-inner::after{
+    content:"";position:absolute;top:-60%;left:-20%;width:70%;height:220%;
+    background:linear-gradient(120deg, rgba(255,255,255,.45) 0%, rgba(255,255,255,0) 55%);
+    transform:rotate(18deg);z-index:1;pointer-events:none;
+    transition:transform .6s ease;
+  }
+  .plan-card:hover .plan-card-inner::after{transform:rotate(18deg) translateX(40px);}
+  .plan-card.starter .plan-card-inner{background:linear-gradient(160deg, rgba(210,235,255,.5) 0%, rgba(180,220,250,.32) 55%, rgba(150,200,245,.3) 100%);}
+  .plan-card.premium .plan-card-inner{background:linear-gradient(160deg, rgba(210,235,255,.45) 0%, rgba(170,210,245,.32) 50%, rgba(130,180,235,.32) 100%);}
+  .plan-card.starter{box-shadow:0 20px 45px -22px rgba(59,117,208,.28);}
+  .plan-card.premium{box-shadow:0 20px 45px -20px rgba(23,67,155,.32);}
+  .plan-card.starter:hover{box-shadow:0 30px 60px -20px rgba(59,117,208,.4), 0 0 30px -10px rgba(96,165,250,.4);}
+  .plan-card.premium:hover{box-shadow:0 32px 65px -18px rgba(23,67,155,.42), 0 0 32px -8px rgba(76,134,219,.42);}
+  .plan-tag{position:absolute;top:26px;right:26px;background:rgba(255,255,255,.7);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.9);color:var(--blue-600);font-size:12px;font-weight:700;padding:5px 12px;border-radius:999px;z-index:2;animation:pulseTag 2s ease-in-out infinite;}
+  @keyframes pulseTag{0%,100%{box-shadow:0 0 0 0 rgba(255,255,255,.35);}50%{box-shadow:0 0 0 6px rgba(255,255,255,0);}}
+  .plan-icon{width:50px;height:50px;border-radius:14px;background:rgba(255,255,255,.25);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.45);display:flex;align-items:center;justify-content:center;font-size:24px;margin-bottom:16px;position:relative;z-index:2;box-shadow:0 4px 14px -4px rgba(0,0,0,.15);animation:iconFloat 3s ease-in-out infinite;}
+  @keyframes iconFloat{0%,100%{transform:translateY(0) rotate(0deg);}50%{transform:translateY(-5px) rotate(-4deg);}}
+  .plan-name{font-family:'Poppins',sans-serif;font-weight:700;font-size:15px;letter-spacing:.4px;color:var(--red-600);background:rgba(255,255,255,.95);display:inline-block;padding:6px 14px;border-radius:8px;margin-bottom:18px;position:relative;z-index:2;box-shadow:0 4px 14px -4px rgba(0,0,0,.2);}
+  .plan-price{font-family:'Poppins',sans-serif;font-weight:800;font-size:38px;background:linear-gradient(90deg,#0B1B34 0%,#1E3A5F 100%);-webkit-background-clip:text;background-clip:text;color:transparent;margin-bottom:2px;position:relative;z-index:2;}
+  .plan-price sup{font-size:15px;font-weight:700;}
+  .plan-sub{font-size:13.5px;color:var(--navy-700);margin-bottom:22px;position:relative;z-index:2;}
+  .plan-divider{height:1px;background:rgba(30,58,95,.18);margin-bottom:20px;position:relative;z-index:2;}
+  .plan-struct-title{font-size:12.5px;font-weight:700;letter-spacing:.6px;color:var(--blue-600);margin-bottom:16px;position:relative;z-index:2;}
+  .plan-struct-list{list-style:none;display:flex;flex-direction:column;gap:14px;margin-bottom:28px;position:relative;z-index:2;}
+  .plan-struct-list li{display:flex;gap:12px;font-size:14.5px;color:var(--navy-700);align-items:flex-start;}
+  .plan-struct-list li .amt{font-weight:800;flex:none;min-width:64px;}
+  .plan-cta{display:block;text-align:center;background:var(--blue-600);color:#FFFFFF;font-weight:700;font-size:15px;padding:13px;border-radius:12px;position:relative;z-index:2;transition:transform .2s,box-shadow .2s,background .2s;box-shadow:0 10px 22px -8px rgba(37,99,235,.4);}
+  .plan-cta:hover{transform:translateY(-2px) scale(1.02);box-shadow:0 14px 28px -8px rgba(37,99,235,.55);background:#1D4ED8;}
+  .plan-card.premium .plan-cta{background:#17439B;box-shadow:0 10px 22px -8px rgba(23,67,155,.45);}
+
+  .plans-footnote{max-width:600px;margin:26px auto 0;text-align:center;color:var(--slate-500);font-size:13.5px;position:relative;}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Inter',sans-serif;color:var(--navy-900);background:var(--white);
+    line-height:1.6;overflow-x:hidden;
+  }
+  h1,h2,h3,h4{font-family:'Poppins',sans-serif;color:var(--navy-900);line-height:1.25;}
+  a{text-decoration:none;color:inherit;}
+  img{max-width:100%;display:block;}
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important;}
+  }
+
+  .section-head{max-width:640px;margin:0 auto 46px;text-align:center;position:relative;}
+  .section-head .kicker{color:var(--blue-600);font-weight:600;font-size:13.5px;margin-bottom:10px;display:block;}
+  .section-head h2{font-size:clamp(26px,3.4vw,36px);margin-bottom:12px;font-weight:700;}
+  .section-head p{color:var(--slate-500);font-size:16px;}
+
+  /* ---------- Comparison Table ---------- */
+  .compare-section{background:var(--sky-50);padding:90px 24px;}
+  .compare-wrap{max-width:940px;margin:0 auto;overflow-x:auto;border-radius:18px;border:1px solid var(--slate-200);background:var(--white);box-shadow:0 24px 60px -30px rgba(11,27,52,.2);}
+  table{width:100%;border-collapse:collapse;min-width:600px;}
+  thead th{font-family:'Poppins',sans-serif;font-size:14.5px;font-weight:600;text-align:left;padding:20px 22px;background:var(--white);border-bottom:1px solid var(--slate-200);}
+  thead th:not(:first-child){text-align:center;color:var(--navy-700);}
+  thead th.premium-col{color:var(--blue-600);}
+  tbody tr{transition:background .18s;}
+  tbody tr:hover{background:#FBFDFF;}
+  tbody td{padding:14px 22px;font-size:14.5px;border-bottom:1px solid #EEF2F7;color:var(--navy-700);}
+  tbody tr:last-child td{border-bottom:none;}
+  tbody td:not(:first-child){text-align:center;}
+  tbody td.feature-name{color:var(--navy-900);font-weight:500;display:flex;align-items:center;gap:10px;}
+  .ficon{width:26px;height:26px;border-radius:8px;background:var(--sky-100);display:inline-flex;align-items:center;justify-content:center;font-size:13px;flex:none;}
+  .col-premium{background:var(--sky-50);}
+  .yes{display:inline-flex;width:23px;height:23px;border-radius:50%;background:var(--blue-600);align-items:center;justify-content:center;}
+  .yes svg{width:11px;height:11px;}
+  .no{color:#C4CCD6;font-weight:600;}
+  .highlight-val{color:var(--red-600);font-weight:700;}
+
+  @media(max-width:600px){
+    thead th, tbody td{padding:12px 14px;}
+  }
+
+  section{position:relative;}
+
+/* Buttons */
+.btn{
+  padding:11px 22px;border-radius:999px;
+  background:var(--red);color:#fff;font-weight:600;font-size:14.5px;
+  box-shadow:0 10px 24px -10px rgba(214,40,57,0.55);
+  transition:transform .25s ease, box-shadow .25s ease, background .25s ease;
+  border:none;cursor:pointer;text-decoration:none;
+}
+.btn:hover{transform:translateY(-2px);box-shadow:0 16px 30px -10px rgba(214,40,57,0.65);background:var(--red-deep);}
+.btn-ghost{
+  background:transparent;color:var(--sky-deep);border:1.5px solid var(--sky-deep);
+  box-shadow:none;
+}
+.btn-ghost:hover{background:var(--sky-deep);color:#fff;box-shadow:0 10px 24px -12px rgba(11,99,197,0.5);}
+
+/* CTA banner */
+.cta-banner{
+  margin:0 32px 110px;max-width:1180px;margin-left:auto;margin-right:auto;
+  border-radius:24px;padding:64px 56px;text-align:center;position:relative;overflow:hidden;
+  background:linear-gradient(120deg,var(--sky-deep),#0a4faf 55%,var(--red-deep));
+  color:#fff;
+}
+.cta-banner::before{
+  content:"";position:absolute;inset:0;
+  background:radial-gradient(600px 300px at 15% 20%, rgba(255,255,255,0.14), transparent 60%);
+}
+.cta-banner h2{font-family:'Space Grotesk',sans-serif;font-size:clamp(26px,3.4vw,38px);margin-bottom:14px;font-weight:700;position:relative;}
+.cta-banner p{opacity:.9;margin-bottom:30px;font-size:16px;position:relative;}
+.cta-btns{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;position:relative;}
+.cta-banner .btn{background:#fff;color:var(--red-deep);box-shadow:0 14px 30px -12px rgba(0,0,0,0.35);}
+.cta-banner .btn:hover{background:var(--sky-light);}
+.cta-banner .btn-ghost{border-color:rgba(255,255,255,.6);color:#fff;}
+.cta-banner .btn-ghost:hover{background:rgba(255,255,255,.15);color:#fff;}
+
+/* Mobile */
+@media (max-width:600px){
+  .cta-banner{padding:44px 26px;}
+}
+
+/* Scroll reveal animation */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .8s ease,transform .8s ease;}
+.reveal.in{opacity:1;transform:translateY(0);}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+ul{list-style:none;}
+a{text-decoration:none;color:inherit;}
+img{max-width:100%;display:block;}
+.wrap{max-width:1180px;margin:0 auto;padding:0 32px;}
+
+/* Footer */
+footer{background:var(--ink);color:#c9d5e6;padding:70px 0 26px;font-family:'Inter',sans-serif;}
+.footer-grid{display:grid;grid-template-columns:1.4fr 1fr 1.2fr 1.2fr;gap:44px;margin-bottom:54px;}
+.footer-logo{display:flex;align-items:center;gap:9px;color:#fff;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:19px;margin-bottom:16px;}
+.footer-col h4{color:#fff;font-size:14.5px;margin-bottom:18px;font-weight:600;font-family:'Space Grotesk',sans-serif;}
+.footer-col li{margin-bottom:11px;font-size:13.5px;}
+.footer-col a{color:#9DAEC6;transition:color .2s ease;}
+.footer-col a:hover{color:var(--red);}
+footer p.desc{font-size:13.5px;color:#8FA1BA;line-height:1.7;max-width:280px;}
+
+/* Newsletter */
+.newsletter-row{display:flex;gap:0;margin-top:6px;}
+.newsletter-row input{
+  flex:1;padding:11px 14px;border-radius:999px 0 0 999px;border:1px solid #24334f;
+  background:#0f2440;color:#fff;font-size:13px;outline:none;
+}
+.newsletter-row button{
+  padding:11px 18px;border-radius:0 999px 999px 0;background:var(--red);color:#fff;
+  border:none;font-weight:600;font-size:13px;cursor:pointer;transition:background .2s ease;
+}
+.newsletter-row button:hover{background:var(--red-deep);}
+
+/* Social icons */
+.social-row{display:flex;gap:10px;margin-top:20px;}
+.social-row a{
+  width:34px;height:34px;border-radius:50%;border:1px solid #24334f;
+  display:flex;align-items:center;justify-content:center;font-size:13px;color:#c9d5e6;
+  transition:background .2s ease, border-color .2s ease;
+}
+.social-row a:hover{background:var(--sky-deep);border-color:var(--sky-deep);}
+
+/* Bottom bar */
+.footer-bottom{
+  border-top:1px solid #1a2b47;padding-top:24px;display:flex;justify-content:space-between;
+  flex-wrap:wrap;gap:12px;font-size:12.5px;color:#7C8FAA;
+}
+.footer-bottom a{color:#7C8FAA;}
+.footer-bottom a:hover{color:#fff;}
+.footer-bottom .legal{display:flex;gap:20px;}
+
+/* Responsive */
+@media (max-width:920px){
+  .footer-grid{grid-template-columns:1fr 1fr;}
+}
+@media (max-width:600px){
+  .footer-grid{grid-template-columns:1fr;}
+}
+    </style>
+</head>
+<body>
+    
+    <header id="siteHeader">
+  <nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container">
+      <a class="navbar-brand" href="index.html"><span><img src="Images/Light Logo.png" alt="" style="height: 70px;"></span></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav nav ms-auto mb-2 mb-lg-0">
+          <li class="nav-item me-0">
+            <a href="about.html">About</a>
+          </li>
+          <li class="nav-item me-0">
+            <a href="services.html">Services</a>
+          </li>
+          <li class="nav-item me-0">
+            <a href="blog.html">Blog</a>
+          </li>
+          <li class="nav-item me-0">
+            <a href="contact.html">Contact</a>
+          </li>
+          <li class="nav-item me-0">
+            <a href="join.html" class="btn">Join Our Network</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<div class="preview-spacer"></div>
+
+    <!-- ============ HERO / BANNER SECTION ============ -->
+<section class="hero" id="hero">
+
+  <!-- decorative background blobs -->
+  <div class="blob b1" data-depth="20"></div>
+  <div class="blob b2" data-depth="35"></div>
+  <div class="blob b3" data-depth="15"></div>
+
+  <!-- floating info cards -->
+  <div class="float-card fc-1">
+    <div class="fc-emoji">🎯</div>
+    <div>05 Interviews<span class="fc-sub">Premium guarantee</span></div>
+  </div>
+  <div class="float-card fc-2">
+    <div class="fc-emoji">💼</div>
+    <div>150 apps/day<span class="fc-sub">Both plans</span></div>
+  </div>
+  <div class="float-card fc-3">
+    <div class="fc-emoji">✅</div>
+    <div>Pay as you're hired<span class="fc-sub">No big upfront fee</span></div>
+  </div>
+
+  <!-- Bootstrap container for the text content -->
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-12 col-lg-9">
+
+        <span class="eyebrow-pill"><span class="dot"></span>Plans &amp; Pricing</span>
+
+        <h1>Pay mostly when you're <span class="accent">actually earning</span></h1>
+
+        <p class="lead">
+          Two straightforward plans. A small commitment upfront, the rest tied to interviews
+          and your first paycheck — so we stay invested in getting you placed.
+        </p>
+
+        <div class="hero-note">
+          <div>
+            <span class="dot-check">
+              <svg viewBox="0 0 12 12" fill="none"><path d="M2 6L4.5 8.5L10 3" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            No large upfront fee
+          </div>
+          <div>
+            <span class="dot-check">
+              <svg viewBox="0 0 12 12" fill="none"><path d="M2 6L4.5 8.5L10 3" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            Success-linked payments
+          </div>
+          <div>
+            <span class="dot-check">
+              <svg viewBox="0 0 12 12" fill="none"><path d="M2 6L4.5 8.5L10 3" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            Cancel-friendly terms
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+<!-- ============ END HERO / BANNER SECTION ============ -->
+
+<section class="score py-4">
+    <div class="container">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-md-3 my-3 text-center">
+                <h3 class="m-0" style="color: #8FCBFF; font-weight: bold;">120+</h2>
+                <p class="small m-0" style="color: #8FCBFF;">Candidate Placed</p>
+            </div>
+
+            <div class="col-md-3 my-3 text-center">
+                <h3 class="m-0" style="color: #8FCBFF; font-weight: bold;">100+</h2>
+                <p class="small m-0" style="color: #8FCBFF;">Hiring Partners</p>
+            </div>
+
+            <div class="col-md-3 my-3 text-center">
+                <h3 class="m-0" style="color: #8FCBFF; font-weight: bold;">99%</h2>
+                <p class="small m-0" style="color: #8FCBFF;">Placement Rate</p>
+            </div>
+
+            <div class="col-md-3 my-3 text-center">
+                <h3 class="m-0" style="color: #8FCBFF; font-weight: bold;">24/7</h2>
+                <p class="small m-0" style="color: #8FCBFF;">Expert Support</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="plans-section">
+  <div class="plans-bg-blob pbb-1"></div>
+  <div class="plans-bg-blob pbb-2"></div>
+  <div class="plans-bg-blob pbb-3"></div>
+  <div class="plans-bg-blob pbb-4"></div>
+  <div class="section-head">
+    <span class="kicker">Choose your path</span>
+    <h2>Two plans, one goal — your next job</h2>
+    <p>Start lean with Starter, or go all-in with Premium for a dedicated recruiter and a stronger interview guarantee.</p>
+  </div>
+
+  <div class="plans-grid">
+
+    <div class="plan-card starter">
+      <div class="plan-card-inner">
+      <div class="plan-icon">🚀</div>
+      <div class="plan-name">STARTER PLAN</div>
+      <div class="plan-price">$1,000 <sup>+ 15%</sup></div>
+      <div class="plan-sub">Base fee + 15% of your first year's income</div>
+      <div class="plan-divider"></div>
+      <div class="plan-struct-title">PAYMENT STRUCTURE</div>
+      <ul class="plan-struct-list">
+        <li><span class="amt">$700</span> Upfront</li>
+        <li><span class="amt">$300</span> After you get 3 interviews</li>
+        <li><span class="amt">15%</span> Of annual income, in 4 installments starting from your first paycheck</li>
+      </ul>
+      <a href="join.html" class="plan-cta">Choose Starter</a>
+      </div>
+    </div>
+
+    <div class="plan-card premium">
+      <div class="plan-card-inner">
+      <div class="plan-tag">15 interview guarantee</div>
+      <div class="plan-icon">👑</div>
+      <div class="plan-name">PREMIUM PLAN</div>
+      <div class="plan-price">$2,000 <sup>+ 12%</sup></div>
+      <div class="plan-sub">Base fee + 12% of your first year's income</div>
+      <div class="plan-divider"></div>
+      <div class="plan-struct-title">PAYMENT STRUCTURE</div>
+      <ul class="plan-struct-list">
+        <li><span class="amt">$1,000</span> Upfront</li>
+        <li><span class="amt">$1,000</span> After you get 3 interviews</li>
+        <li><span class="amt">12%</span> Of annual income, in 4 installments starting from your first paycheck</li>
+      </ul>
+      <a href="join.html" class="plan-cta">Choose Premium</a>
+      </div>
+    </div>
+
+  </div>
+  <p class="plans-footnote">Both plans include unlimited applications up to 150/day, resume marketing, interview scheduling and follow-up.</p>
+</section>
+
+<section class="compare-section">
+  <div class="section-head">
+    <span class="kicker">Side by side</span>
+    <h2>Compare what's included</h2>
+    <p>Every plan starts with a solid resume and application engine. Premium adds a dedicated recruiter and a stronger guarantee.</p>
+  </div>
+
+  <div class="compare-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Feature</th>
+          <th>Starter</th>
+          <th class="premium-col">Premium</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class="feature-name"><span class="ficon">📄</span>Resume preparation</td><td><span class="yes"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6L4.5 8.5L10 3" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></td><td class="col-premium"><span class="yes"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6L4.5 8.5L10 3" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></td></tr>
+        <tr><td class="feature-name"><span class="ficon">🗒️</span>Resume understanding session</td><td><span class="yes"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6L4.5 8.5L10 3" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></td><td class="col-premium"><span class="yes"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6L4.5 8.5L10 3" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></td></tr>
+        <tr><td class="feature-name"><span class="ficon">📬</span>Applications / day</td><td class="highlight-val">Up to 150</td><td class="col-premium highlight-val">Up to 150</td></tr>
+        <tr><td class="feature-name"><span class="ficon">🧑‍💼</span>Associate recruiter</td><td><span class="no">—</span></td><td class="col-premium"><span class="yes"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6L4.5 8.5L10 3" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></td></tr>
+        <tr><td class="feature-name"><span class="ficon">🎤</span>Interview preparation</td><td><span class="yes"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6L4.5 8.5L10 3" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></td><td class="col-premium"><span class="yes"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6L4.5 8.5L10 3" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></td></tr>
+        <tr><td class="feature-name"><span class="ficon">📢</span>Resume marketing</td><td><span class="yes"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6L4.5 8.5L10 3" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></td><td class="col-premium"><span class="yes"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6L4.5 8.5L10 3" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></td></tr>
+        <tr><td class="feature-name"><span class="ficon">📅</span>Interview scheduling</td><td><span class="yes"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6L4.5 8.5L10 3" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></td><td class="col-premium"><span class="yes"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6L4.5 8.5L10 3" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></td></tr>
+        <tr><td class="feature-name"><span class="ficon">🔁</span>Interview follow-up</td><td><span class="yes"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6L4.5 8.5L10 3" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></td><td class="col-premium"><span class="yes"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6L4.5 8.5L10 3" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></td></tr>
+        <tr><td class="feature-name"><span class="ficon">🎬</span>Mock interview session</td><td><span class="no">—</span></td><td class="col-premium"><span class="yes"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6L4.5 8.5L10 3" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></td></tr>
+        <tr><td class="feature-name"><span class="ficon">🎓</span>Special training</td><td><span class="no">—</span></td><td class="col-premium"><span class="no">—</span></td></tr>
+        <tr><td class="feature-name"><span class="ficon">🧭</span>Job description sessions</td><td><span class="no">—</span></td><td class="col-premium"><span class="yes"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6L4.5 8.5L10 3" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></td></tr>
+        <tr><td class="feature-name"><span class="ficon">💻</span>Technical query sessions</td><td><span class="no">—</span></td><td class="col-premium"><span class="yes"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6L4.5 8.5L10 3" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></td></tr>
+        <tr><td class="feature-name"><span class="ficon">🎯</span>Interview assistance</td><td><span class="no">—</span></td><td class="col-premium highlight-val">05 interviews</td></tr>
+        <tr><td class="feature-name"><span class="ficon">🤝</span>Personal recruiter</td><td><span class="no">—</span></td><td class="col-premium"><span class="yes"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6L4.5 8.5L10 3" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></td></tr>
+        <tr><td class="feature-name"><span class="ficon">📧</span>Email handling support</td><td><span class="no">—</span></td><td class="col-premium"><span class="yes"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6L4.5 8.5L10 3" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></td></tr>
+        <tr><td class="feature-name"><span class="ficon">🛡️</span>Interview guarantee</td><td><span class="no">—</span></td><td class="col-premium highlight-val">15 interviews</td></tr>
+        <tr><td class="feature-name"><span class="ficon">🏁</span>Placement onboarding support</td><td><span class="no">—</span></td><td class="col-premium"><span class="yes"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6L4.5 8.5L10 3" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></td></tr>
+        <tr><td class="feature-name"><span class="ficon">🔗</span>LinkedIn support</td><td><span class="no">—</span></td><td class="col-premium"><span class="yes"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6L4.5 8.5L10 3" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- CTA BANNER -->
+<section>
+  <div class="cta-banner reveal" id="contact">
+    <h2 class="text-white">Ready to land your dream job?</h2>
+    <p>Join hundreds of professionals who found their perfect role through Aivora Jobs.</p>
+    <div class="cta-btns">
+      <a href="join.html" class="btn">🚀 Join Our Network</a>
+      <a href="tel:+14077038458" class="btn btn-ghost">📞 Talk to Advisor</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo"><span><img src="Images/Dark Logo.png" alt="" style="height: 70px;"></span></div>
+        <p class="desc">Aivora Jobs uses AI to smartly connect exceptional talent with innovative companies. Your career growth, our mission.</p>
+        <div class="social-row">
+          <a href="https://www.facebook.com/share/197tzqQ9AG/?mibextid=wwXIfr" target="_blank">f</a><a href="https://www.linkedin.com/company/aivora-jobs/" target="_blank">in</a><a href="https://www.instagram.com/aivorajobs?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="services.html">Our Services</a></li>
+          <li><a href="blog.html">Career Blog</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="join.html">Join Network</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact Info</h4>
+        <ul>
+          <li>📍 8 The Green, Suite B, Dover, Delaware 19901</li>
+          <li>📞 +1 407-703-8458</li>
+          <li>✉️ service@aivorajobs.com</li>
+          <li>⏰ Mon–Fri: 9:00 AM – 7:00 PM</li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Stay Updated</h4>
+        <p style="font-size:13px;color:#8FA1BA;margin-bottom:12px;">Get the latest job alerts and career tips in your inbox.</p>
+        <div class="newsletter-row">
+          <input type="email" placeholder="Your email address">
+          <a href="join.html"><button>Go</button></a>
+        </div>
+        <a href="https://wa.me/917041063111?text=Hello+Aivora+Jobs%21+I+want+to+know+more"><p style="font-size:12px;color:#66799A;margin-top:14px;">💬 WhatsApp Us</p></a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Aivora Jobs. All rights reserved.</span>
+      <div class="legal">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+    <script src="JS/bootstrap.bundle.min.js"></script>
+    <script>
+  // Respect the user's motion preference: skip the parallax if they asked for reduced motion
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (!prefersReducedMotion) {
+    const hero  = document.getElementById('hero');
+    const blobs = hero.querySelectorAll('.blob');
+
+    // Subtle mouse-parallax on the background blobs
+    hero.addEventListener('mousemove', (e) => {
+      const { left, top, width, height } = hero.getBoundingClientRect();
+      const x = (e.clientX - left) / width  - 0.5;   // -0.5 .. 0.5
+      const y = (e.clientY - top)  / height - 0.5;
+
+      blobs.forEach((blob) => {
+        const depth = parseInt(blob.dataset.depth, 10) || 20;
+        blob.style.transform = `translate(${x * depth}px, ${y * depth}px)`;
+      });
+    });
+
+    // Reset blobs when the cursor leaves the hero
+    hero.addEventListener('mouseleave', () => {
+      blobs.forEach((blob) => { blob.style.transform = 'translate(0, 0)'; });
+    });
+  }
+</script>
+
+<script>
+  // Nav link click par mobile menu auto-close
+  document.querySelectorAll('#navbarSupportedContent .nav-link').forEach(link => {
+    link.addEventListener('click', () => {
+      const menu = document.getElementById('navbarSupportedContent');
+      if (menu.classList.contains('show')) {
+        bootstrap.Collapse.getInstance(menu)?.hide();
+      }
+    });
+  });
+</script>
+
+<script>
+  // Header scroll state
+  const header = document.getElementById('siteHeader');
+  window.addEventListener('scroll', () => {
+    header.classList.toggle('scrolled', window.scrollY > 20);
+  });
+</script>
+
+<script>
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if(e.isIntersecting){ e.target.classList.add('in'); }
+    });
+  }, {threshold:0.15});
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+</body>
+</html>
